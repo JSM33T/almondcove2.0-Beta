@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './styles/global.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-import './library/vendor/bootstrap.min.js'
+
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

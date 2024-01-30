@@ -2,6 +2,15 @@ export default function SidePanel() {
     return (
         <>
             <a className="position-fixed top-50 bg-light text-dark fw-medium border rounded-pill shadow text-decoration-none"
+            style={{
+                right: '-1.75rem',
+                marginTop: '-1rem',
+                padding: '.25rem 1rem',
+                transform: 'rotate(-90deg)',
+                fontSize: 'calc(var(--ar-body-font-size) * .8125)',
+                letterSpacing: '.075rem',
+                zIndex: 1030,
+              }}
                 href="#customizer" data-bs-toggle="offcanvas">
                 <i className="ai-settings text-primary fs-base me-1 ms-n1"></i>
                 <i className="ai-music text-primary fs-base me-1 ms-n1"></i>

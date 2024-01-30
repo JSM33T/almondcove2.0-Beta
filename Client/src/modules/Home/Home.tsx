@@ -1,7 +1,16 @@
+import { useEffect } from "react";
+import Hero from "./Hero";
+import MailingList from "./MailingList";
+import { initParallax } from "../../library/global";
+
 export default function Home() {
+    useEffect(()=>{
+        initParallax();
+    });
     return (
-        <section className="contaner pt-5 mt-5">
-            Thtas nice noe
-        </section>
+        <>
+            <Hero/>
+            <MailingList />
+        </>
     )
 }

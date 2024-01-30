@@ -8,10 +8,7 @@ export default function ThemeSwitch(){
       if (storedTheme) {
         return storedTheme
       }
-  
-      // Set default theme to 'light'.
-      // Possible options: 'dark' or system color mode (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-      return 'light '
+      return 'dark '
     }
   
     const setTheme = theme => {

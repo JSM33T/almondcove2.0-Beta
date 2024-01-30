@@ -4,7 +4,7 @@ export function Navbar() {
     return (
         <>
             <header>
-                <div className="navbar navbar-expand-lg fixed-top">
+                <div className="navbar navbar-expand-lg fixed-top bg-light navbar-frost navbar-stuck">
                     <div className="container">
                         <a className="navbar-brand pe-sm-3" href="index.html">
                             <span className="text-primary flex-shrink-0 me-2">

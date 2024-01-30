@@ -2,8 +2,11 @@ import { Route, Routes } from 'react-router-dom'
 import { Navbar } from './components/shared/NavBar'
 import React, { Suspense, useEffect } from 'react';
 import { Footer } from './components/shared/Footer';
-import ThemeSwitch from './library/theme';
+
 import SidePanel from './components/shared/SidePanel';
+import './library/vendor/almondcove.js'
+import ThemeSwitch from './library/theme.ts';
+import BackToTop from './components/shared/BackToTop.tsx';
 
 const LazyHome = React.lazy(() => import('./modules/Home/Home'));
 const LazyAbout = React.lazy(() => import('./modules/About/About'));
@@ -25,6 +28,7 @@ function App() {
 					</Routes>
 				</Suspense>
 			</main>
+			<BackToTop/>
 			<Footer />
 		</>
 	)
