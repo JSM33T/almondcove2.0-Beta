@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import Hero from "./Hero";
-import MailingList from "./MailingList";
+import Hero from "./_partials/Hero";
+import MailingList from "./_partials/MailingList";
 import { initParallax } from "../../library/global";
 
 export default function Home() {

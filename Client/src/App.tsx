@@ -7,6 +7,7 @@ import SidePanel from './components/shared/SidePanel';
 import './library/vendor/almondcove.js'
 import ThemeSwitch from './library/theme.ts';
 import BackToTop from './components/shared/BackToTop.tsx';
+import UserContextProvider from './context/UserContextProvider.tsx';
 
 const LazyHome = React.lazy(() => import('./modules/Home/Home'));
 const LazyAbout = React.lazy(() => import('./modules/About/About'));
@@ -14,13 +15,13 @@ const LazyAbout = React.lazy(() => import('./modules/About/About'));
 
 function App() {
 	useEffect(() => {
-		ThemeSwitch();
+		ThemeSwitch;
 	});
 	return (
-		<>
+		<UserContextProvider>
 			<main className="page-wrapper">
 				<Navbar />
-				<SidePanel/>
+				<SidePanel />
 				<Suspense fallback={<span>somethig bout loading and stuff....</span>}>
 					<Routes>
 						<Route path='/' element={<LazyHome />} />
@@ -28,9 +29,9 @@ function App() {
 					</Routes>
 				</Suspense>
 			</main>
-			<BackToTop/>
+			<BackToTop />
 			<Footer />
-		</>
+		</UserContextProvider>
 	)
 }
 
