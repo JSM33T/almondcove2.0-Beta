@@ -1,6 +1,63 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export function Navbar() {
+
+    useEffect(()=>{
+        const getStoredTheme = (): string | null => localStorage.getItem('theme');
+        const setStoredTheme = (theme: string): void => localStorage.setItem('theme', theme);
+    
+        const getPreferredTheme = (): string => {
+            const storedTheme = getStoredTheme();
+            if (storedTheme) {
+                return storedTheme;
+            }
+            return 'light';
+        };
+    
+        const setTheme = (theme: string): void => {
+            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-bs-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-bs-theme', theme);
+            }
+        };
+    
+        setTheme(getPreferredTheme());
+    
+        const showActiveTheme = (theme: string): void => {
+            const themeSwitcher = document.querySelector('[data-bs-toggle="mode"]');
+    
+            if (!themeSwitcher) {
+                return;
+            }
+    
+            const themeSwitcherCheck = themeSwitcher.querySelector<HTMLInputElement>('input[type="checkbox"]');
+    
+            if (theme === 'dark') {
+                themeSwitcherCheck!.checked = true;
+            } else {
+                themeSwitcherCheck!.checked = false;
+            }
+        };
+    
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            const storedTheme = getStoredTheme();
+            if (storedTheme !== 'light' && storedTheme !== 'dark') {
+                setTheme(getPreferredTheme());
+            }
+        });
+    
+        document.querySelectorAll('[data-bs-toggle="mode"]').forEach((toggle) => {
+            toggle.addEventListener('click', () => {
+                const theme = (toggle.querySelector<HTMLInputElement>('input[type="checkbox"]')!.checked === true) ? 'dark' : 'light';
+                setStoredTheme(theme);
+                setTheme(theme);
+                showActiveTheme(theme);
+            });
+        });
+    })
+
     return (
         <>
             <header>
@@ -16,13 +73,13 @@ export function Navbar() {
                         </a>
 
                         <div className="form-check form-switch mode-switch order-lg-2 me-3 me-lg-4 ms-auto" data-bs-toggle="mode">
-                            <input className="form-check-input" type="checkbox" id="theme-mode"/>
-                                <label className="form-check-label" htmlFor="theme-mode">
-                                    <i className="ai-sun fs-lg"></i>
-                                </label>
-                                <label className="form-check-label" htmlFor="theme-mode">
-                                    <i className="ai-moon fs-lg"></i>
-                                </label>
+                            <input className="form-check-input" type="checkbox" id="theme-mode" />
+                            <label className="form-check-label" htmlFor="theme-mode">
+                                <i className="ai-sun fs-lg"></i>
+                            </label>
+                            <label className="form-check-label" htmlFor="theme-mode">
+                                <i className="ai-moon fs-lg"></i>
+                            </label>
                         </div>
 
                         <a className="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="https://almondcove.in" target="_blank" rel="noopener">
@@ -41,7 +98,7 @@ export function Navbar() {
                                     <Link className="nav-link" to="/">Home</Link>
                                 </li>
                                 <li className="nav-item">
-                                <Link className="nav-link" to="/about">About</Link>
+                                    <Link className="nav-link" to="/about">About</Link>
                                 </li>
                             </ul>
                             <div className="d-sm-none p-3 mt-n3">

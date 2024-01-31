@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using API.Data;
+using API.Entities.Domain;
+using API.Entities.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using API.Data;
-using API.Entities.Domain;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/mail")]
     [ApiController]
     public class MailingListController(AlmondDbContext context) : ControllerBase
     {
         private readonly AlmondDbContext _context = context;
 
-        // GET: api/MailingList
-        [HttpGet]
+        [HttpGet("getall")]
         public async Task<ActionResult<IEnumerable<Mail>>> GetMailingList()
         {
             return await _context.MailingList.ToListAsync();
         }
 
-        // GET: api/MailingList/5
-        [HttpGet("{id}")]
+        [HttpGet("getbyid/{id}")]
         public async Task<ActionResult<Mail>> GetMail(int id)
         {
             var mail = await _context.MailingList.FindAsync(id);
@@ -37,67 +31,29 @@ namespace API.Controllers
             return mail;
         }
 
-        // PUT: api/MailingList/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMail(int id, Mail mail)
+        [HttpPost("add")]
+        public async Task<ActionResult<Mail>> PostMail(AddMailDTO mail)
         {
-            if (id != mail.Id)
+            if (MailExists(mail.Email)) return Conflict();
+
+            Mail mailp = new()
             {
-                return BadRequest();
-            }
-
-            _context.Entry(mail).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MailExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/MailingList
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Mail>> PostMail(Mail mail)
-        {
-            _context.MailingList.Add(mail);
+                Email = mail.Email,
+                Origin = mail.Origin,
+                DateAdded = DateTime.Now,
+                IsActive = true
+            };
+            _context.MailingList.Add(mailp);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMail", new { id = mail.Id }, mail);
+            return CreatedAtAction("GetMail", new { id = mailp.Id }, mail);
         }
 
-        // DELETE: api/MailingList/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMail(int id)
+       
+
+        private bool MailExists(string mail)
         {
-            var mail = await _context.MailingList.FindAsync(id);
-            if (mail == null)
-            {
-                return NotFound();
-            }
-
-            _context.MailingList.Remove(mail);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool MailExists(int id)
-        {
-            return _context.MailingList.Any(e => e.Id == id);
+            return _context.MailingList.Any(e => e.Email == mail);
         }
     }
 }
