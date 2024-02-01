@@ -1,6 +1,7 @@
 // @ts-nocheck
 // import Aos from "aos"
 import Parallax from "parallax-js";
+import { toast } from 'react-toastify';
 // import Shuffle from "shufflejs";
 // import SmoothScroll from "smooth-scroll";
 // import imagesLoaded from "imagesloaded";
@@ -99,59 +100,8 @@ function initShuffle() {
   }
 }
 
-function acToast(type: string, message: string) {
-
-  let toastContainer = document.getElementById('toast-container');
-
-  // Create a new toast element using the DOM API
-  const toastElement = document.createElement('div');
-  toastElement.classList.add('toast');
-  toastElement.setAttribute('role', 'alert');
-  toastElement.setAttribute('autohide', 'false');
-  toastElement.setAttribute('aria-live', 'assertive');
-  toastElement.setAttribute('aria-atomic', 'true');
-
-  // Create toast header
-  const toastHeader = document.createElement('div');
-  toastHeader.classList.add('toast-header', 'bg-primary', 'text-white');
-
-  //const i = document.createElement('i');
-  //i.classList.add('ai-bell', 'fs-lg me-2');
-  //toastHeader.appendChild(i);
-
-  const strong = document.createElement('strong');
-  strong.classList.add('mr-auto');
-  strong.textContent = type;
-  toastHeader.appendChild(strong);
-
-  // Close button with data-bs-dismiss attribute
-  const closeBtn = document.createElement('button');
-  closeBtn.type = 'button';
-  closeBtn.classList.add('btn-close', 'btn-close-white', 'ms-auto');
-  closeBtn.setAttribute('data-dismiss', 'toast');
-  closeBtn.setAttribute('aria-label', 'Close');
-  closeBtn.setAttribute('data-bs-dismiss', 'toast'); // This line closes modals
-  // closeBtn.innerHTML = '<span aria-hidden="true">&times;</span>';
-  toastHeader.appendChild(closeBtn);
-  // Create toast body
-  const toastBody = document.createElement('div');
-  toastBody.classList.add('toast-body');
-  toastBody.textContent = message;
-
-  // Append header and body to the toast element
-  toastElement.appendChild(toastHeader);
-  toastElement.appendChild(toastBody);
-
-  // Append the toast element to the body
-  // document.body.appendChild(toastElement);
-  toastContainer!.appendChild(toastElement);
-  //console.log(toastElement);
-  const toast = new bootstrap.Toast(toastElement);
-  toast.show();
-
-  // toastElement.addEventListener('hidden.bs.toast', function () {
-  //   toastContainer!.removeChild(toastElement);
-  // });
+function acToast(message: string) {
+  toast.dark(message);
 }
 
 function initscrollToTop() {

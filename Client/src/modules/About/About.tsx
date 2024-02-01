@@ -1,4 +1,27 @@
+import { BsInstagram ,BsFacebook,BsGithub} from "react-icons/bs";
 export default function About() {
+
+    
+    const socialLinks = [
+        {
+            platform: 'Instagram',
+            className: 'btn-instagram',
+            iconComponent: () => <BsInstagram/>,
+            url: 'https://instagram.com/jsm33t'
+        },
+        {
+            platform: 'Facebook',
+            className: 'btn-facebook',
+            iconComponent: () => <BsFacebook/>,
+            url: 'https://facebook.com/iamjsm33t'
+        },
+        {
+            platform: 'YouTube',
+            className: 'btn-youtube',
+            iconComponent: () => <BsGithub/>,
+            url: 'https://github.com/jsm33t'
+        }
+    ];
     return (
         <>
             <section className="position-relative pt-sm-4">
@@ -23,9 +46,17 @@ export default function About() {
                         Do connect with me to get updates about the stuff i upload by <a href="/account" className="text-primary">signing up</a> to the AlmondCove
                     </p>
                     <div className="d-flex">
-                        <a className="btn btn-outline-secondary btn-icon btn-sm btn-instagram me-3" target="_blank" href="https://instagram.com/jsm33t"><i className="ai-instagram"></i></a>
-                        <a className="btn btn-outline-secondary btn-icon btn-sm btn-facebook me-3" target="_blank" href="https://facebook.com/iamjsm33t"><i className="ai-facebook"></i></a>
-                        <a className="btn btn-outline-secondary btn-icon btn-sm btn-youtube" target="_blank" href="https://github.com/jsm33t"><i className="ai-github"></i></a></div>
+                        {socialLinks.map((link, index) => (
+                            <a
+                                key={index}
+                                className={`btn btn-outline-secondary btn-icon btn-sm ${link.className} me-3`}
+                                target="_blank"
+                                href={link.url}
+                            >
+                             <link.iconComponent/>
+                            </a>
+                        ))}
+                    </div>
                 </div>
                 <div className="text-center pt-4 my-2 mt-lg-0 pt-lg-5 pb-sm-2 pb-md-4"><a className="btn btn-outline-primary rounded-pill" target="_blank" href="https://jsm33t.in">My Portfolio &nbsp;<i className="ai ai-external-link"></i></a> </div>
             </section>

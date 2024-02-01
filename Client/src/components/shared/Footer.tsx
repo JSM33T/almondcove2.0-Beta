@@ -1,6 +1,29 @@
+import { BsFacebook, BsGithub, BsInstagram } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 export function Footer() {
+
+    const socialLinks = [
+        {
+            platform: 'Instagram',
+            className: 'btn-instagram',
+            iconComponent: () => <BsInstagram/>,
+            url: 'https://instagram.com/jsm33t'
+        },
+        {
+            platform: 'Facebook',
+            className: 'btn-facebook',
+            iconComponent: () => <BsFacebook/>,
+            url: 'https://facebook.com/iamjsm33t'
+        },
+        {
+            platform: 'YouTube',
+            className: 'btn-youtube',
+            iconComponent: () => <BsGithub/>,
+            url: 'https://github.com/jsm33t'
+        }
+    ];
+    
     return (
         <>
             <footer className="footer pb-3 pt-sm-3 py-md-4 py-lg-5 bg-secondary">
@@ -12,9 +35,17 @@ export function Footer() {
                             <Link className="nav-link py-1 px-0 mx-3" to="/attributions">Attributions</Link>
                         </nav>
                         <div className="d-flex justify-content-center justify-content-md-start me-md-n2">
-                            <a className="btn btn-icon btn-sm btn-secondary btn-instagram rounded-circle mx-2" href="https://instagram.com/jsm33t" aria-label="Instagram"><i className="ai-instagram"></i></a>
-                            <a className="btn btn-icon btn-sm btn-secondary btn-facebook rounded-circle mx-2" href="https://www.facebook.com/almondcovepage" aria-label="Facebook"><i className="ai-facebook"></i></a>
-                            <a className="btn btn-icon btn-sm btn-secondary btn-linkedin rounded-circle mx-2" href="https://github.com/JSM33T/AlmondCove" aria-label="Github"> <i className="ai-github"></i></a>
+                            {socialLinks.map((link,index)=>(
+                                <a 
+                                key={index}
+                                className={`btn btn-outline-secondary btn-icon rounded-circle btn-sm ${link.className} me-3`}
+                                target="_blank"
+                                href={link.url}
+                                >
+                                    <link.iconComponent/>
+                                </a>
+                            )
+                            )}
                         </div>
                     </div>
                     <div className="d-md-flex align-items-center justify-content-between text-center text-md-start">

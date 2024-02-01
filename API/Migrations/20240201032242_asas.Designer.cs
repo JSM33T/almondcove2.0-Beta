@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(AlmondDbContext))]
-    partial class AlmondDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240201032242_asas")]
+    partial class asas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,30 +135,6 @@ namespace API.Migrations
                     b.HasIndex("BlogPostId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("API.Entities.Domain.Blogs.Like", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BlogPostId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlogPostId");
-
-                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("API.Entities.Domain.Blogs.Reply", b =>
@@ -315,15 +294,6 @@ namespace API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("API.Entities.Domain.Blogs.Like", b =>
-                {
-                    b.HasOne("API.Entities.Domain.Blogs.BlogPost", null)
-                        .WithMany("Likes")
-                        .HasForeignKey("BlogPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("API.Entities.Domain.Blogs.Reply", b =>
                 {
                     b.HasOne("API.Entities.Domain.Blogs.Comment", null)
@@ -349,8 +319,6 @@ namespace API.Migrations
                     b.Navigation("AuthorsInvolved");
 
                     b.Navigation("Comments");
-
-                    b.Navigation("Likes");
                 });
 
             modelBuilder.Entity("API.Entities.Domain.Blogs.Category", b =>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
+import { acToast } from '../../../library/global';
 
 export default function MailingList() {
 
@@ -14,18 +14,18 @@ export default function MailingList() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:5190/api/mail/add', { 
+        axios.post('http://localhost:5190/api/Mails', { 
             "origin": "react test",
             "email": email 
         })
             .then(response => {
-                toast.dark("success yay");
+                acToast("Success" + response.statusText);
                 console.log(response);
 
             })
             .catch(error => {
                 console.error('There was an error!', error);
-                toast.dark("nah something wrong bro");
+                acToast("nah something wrong bro");
             });
     };
 

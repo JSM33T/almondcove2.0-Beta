@@ -13,6 +13,8 @@ import LoadingBar from 'react-top-loading-bar'
 
 const LazyHome = React.lazy(() => import('./modules/Home/Home'));
 const LazyAbout = React.lazy(() => import('./modules/About/About'));
+const LazyBlogHome = React.lazy(() => import('./modules/Blogs/Home/BlogHome.tsx'));
+const LazyBlogView = React.lazy(() => import('./modules/Blogs/Viewer/BlogView.tsx'));
 
 
 function App() {
@@ -46,6 +48,8 @@ function App() {
 					<Routes>
 						<Route path='/' element={<LazyHome />} />
 						<Route path='about' element={<LazyAbout />} />
+						<Route path='blogs' element={<LazyBlogHome />} />
+						<Route path='blog' element={<LazyBlogView />} />
 					</Routes>
 				</Suspense>
 			</main>
