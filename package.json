@@ -1,0 +1,6 @@
+{
+"scripts": {
+    "api": "cd API && dotnet watch",
+    "client": "cd client && npm run dev"
+  }
+}
