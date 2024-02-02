@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Navbar } from './components/shared/NavBar'
 import React, { Suspense, useEffect, useState } from 'react';
-import { Footer } from './components/shared/Footer';
+// import { Footer } from './components/shared/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 
 import SidePanel from './components/shared/SidePanel';
@@ -66,7 +66,7 @@ function App() {
 				theme="light"
 			/>
 			<BackToTop />
-			<Footer />
+			{/* <Footer /> */}
 		</UserContextProvider>
 	)
 }

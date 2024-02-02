@@ -7,19 +7,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Data;
 using API.Entities.Domain.Blogs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthorsController : ControllerBase
-    {
-        private readonly AlmondDbContext _context;
 
-        public AuthorsController(AlmondDbContext context)
-        {
-            _context = context;
-        }
+    [Route("api/authors")]
+    [ApiController]
+    public class AuthorsController(AlmondDbContext context) : ControllerBase
+    {
+        private readonly AlmondDbContext _context = context;
+
+
+
+
+        /*=============================================
+                            CRUD
+        =============================================*/
 
         // GET: api/Authors
         [HttpGet]
@@ -30,7 +34,7 @@ namespace API.Controllers
 
         // GET: api/Authors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Authors>> GetAuthors(int id)
+        public async Task<ActionResult<Authors>> GetAuthors(Guid id)
         {
             var authors = await _context.Authors.FindAsync(id);
 
@@ -45,7 +49,7 @@ namespace API.Controllers
         // PUT: api/Authors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAuthors(int id, Authors authors)
+        public async Task<IActionResult> PutAuthors(Guid id, Authors authors)
         {
             if (id != authors.Id)
             {
@@ -86,7 +90,7 @@ namespace API.Controllers
 
         // DELETE: api/Authors/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAuthors(int id)
+        public async Task<IActionResult> DeleteAuthors(Guid id)
         {
             var authors = await _context.Authors.FindAsync(id);
             if (authors == null)
@@ -100,7 +104,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        private bool AuthorsExists(int id)
+        private bool AuthorsExists(Guid id)
         {
             return _context.Authors.Any(e => e.Id == id);
         }

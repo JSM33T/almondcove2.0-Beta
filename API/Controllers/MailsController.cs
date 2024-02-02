@@ -10,7 +10,7 @@ using API.Entities.Domain;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/mails")]
     [ApiController]
     public class MailsController : ControllerBase
     {
@@ -21,6 +21,12 @@ namespace API.Controllers
             _context = context;
         }
 
+
+
+
+        /*=============================================
+                            CRUD
+        =============================================*/
         // GET: api/Mails
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Mail>>> GetMailingList()
@@ -30,7 +36,7 @@ namespace API.Controllers
 
         // GET: api/Mails/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Mail>> GetMail(int id)
+        public async Task<ActionResult<Mail>> GetMail(Guid id)
         {
             var mail = await _context.MailingList.FindAsync(id);
 
@@ -45,7 +51,7 @@ namespace API.Controllers
         // PUT: api/Mails/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMail(int id, Mail mail)
+        public async Task<IActionResult> PutMail(Guid id, Mail mail)
         {
             if (id != mail.Id)
             {
@@ -83,7 +89,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMail(int id)
+        public async Task<IActionResult> DeleteMail(Guid id)
         {
             var mail = await _context.MailingList.FindAsync(id);
             if (mail == null)
@@ -97,7 +103,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        private bool MailExists(int id)
+        private bool MailExists(Guid id)
         {
             return _context.MailingList.Any(e => e.Id == id);
         }

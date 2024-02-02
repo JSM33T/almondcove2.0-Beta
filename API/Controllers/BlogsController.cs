@@ -1,37 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using API.Data;
+﻿using API.Data;
 using API.Entities.Domain.Blogs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BlogsController : ControllerBase
-    {
-        private readonly AlmondDbContext _context;
 
-        public BlogsController(AlmondDbContext context)
+    [Route("api/blogs")]
+    [ApiController]
+    public class BlogsController(AlmondDbContext context) : ControllerBase
+    {
+        private readonly AlmondDbContext _context = context;
+
+
+        [HttpGet("top3")]
+        public async Task<IActionResult> GetTopBlogs()
         {
-            _context = context;
+            var latest3Blogs = await _context.BlogPosts
+              .OrderByDescending(bp => bp.DateCreated)
+              .Take(3) 
+              .Select(bp => new
+              {
+                  BlogPost = bp,
+                  NumberOfComments = bp.Comments.Count(),
+                  NumberOfLikes = bp.Likes.Count()
+              })
+              .ToListAsync();
+
+            return Ok(latest3Blogs);
         }
 
-        // GET: api/Blogs
+
+
+        /*=============================================
+                            CRUD
+        =============================================*/
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BlogPost>>> GetBlogPosts()
         {
             return await _context.BlogPosts.ToListAsync();
         }
 
-        // GET: api/Blogs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BlogPost>> GetBlogPost(int id)
+        public async Task<ActionResult<BlogPost>> GetBlogPost(Guid id)
         {
             var blogPost = await _context.BlogPosts.FindAsync(id);
 
@@ -43,10 +56,8 @@ namespace API.Controllers
             return blogPost;
         }
 
-        // PUT: api/Blogs/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBlogPost(int id, BlogPost blogPost)
+        public async Task<IActionResult> PutBlogPost(Guid id, BlogPost blogPost)
         {
             if (id != blogPost.Id)
             {
@@ -74,8 +85,6 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // POST: api/Blogs
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<BlogPost>> PostBlogPost(BlogPost blogPost)
         {
@@ -87,7 +96,7 @@ namespace API.Controllers
 
         [Authorize]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBlogPost(int id)
+        public async Task<IActionResult> DeleteBlogPost(Guid id)
         {
             var blogPost = await _context.BlogPosts.FindAsync(id);
             if (blogPost == null)
@@ -101,7 +110,14 @@ namespace API.Controllers
             return NoContent();
         }
 
-        private bool BlogPostExists(int id)
+        //[HttpGet]
+        //public async Task<IActionResult> GetBlogDeets(string Slug, string Year)
+        //{
+            
+        //}
+
+
+        private bool BlogPostExists(Guid id)
         {
             return _context.BlogPosts.Any(e => e.Id == id);
         }

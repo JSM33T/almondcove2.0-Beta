@@ -4,13 +4,14 @@ import MailingList from "./_partials/MailingList";
 import { initParallax } from "../../library/global";
 
 export default function Home() {
-    useEffect(()=>{
+    useEffect(() => {
         initParallax();
     });
     return (
         <>
-            <Hero/>
+            <Hero />
             <MailingList />
+           
         </>
     )
 }

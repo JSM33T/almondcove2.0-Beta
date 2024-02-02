@@ -4,7 +4,7 @@ namespace API.Entities.Domain.Blogs
 {
     public class Category
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [StringLength(50)]
         public string Name { get; set; }
         [StringLength(200)]

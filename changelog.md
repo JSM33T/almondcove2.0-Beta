@@ -17,6 +17,8 @@ Cloning instructions
 
 ## Mock env configurations
 
+appsettings.json
+
 ```json
 {
   "Logging": {

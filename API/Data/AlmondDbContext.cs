@@ -16,6 +16,15 @@ namespace API.Data
         public DbSet<Reply> Replies { get; set; }
         public DbSet<Authors> Authors { get; set; }
         public DbSet<Like> Likes{ get; set; }
+        public DbSet<Message> Messages { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Authors>()
+                .HasIndex(e => new { e.MemberId, e.BlogPostId})
+                .IsUnique();
+        }
+
 
     }
 }

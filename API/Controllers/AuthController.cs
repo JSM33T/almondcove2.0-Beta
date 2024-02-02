@@ -10,7 +10,9 @@ using System.Text;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize(Roles = "NA")]
+    //to avoid beta phase access
+    [Route("api/auth")]
     [ApiController]
     public class AuthController(IConfiguration configuration) : ControllerBase
     {
@@ -19,7 +21,7 @@ namespace API.Controllers
         private static UserSessionDTO AuthenticateUser(LoginDTO user)
         {
             UserSessionDTO _user = null;
-            if (user.Username == "something" && user.Password == "jassikainth")
+            if (user.Username == "something" && user.Password == "something")
             {
                 _user = new UserSessionDTO { Username = "Something", Role = "superadmin", FirstName = "something" };
             }
@@ -32,8 +34,9 @@ namespace API.Controllers
             var creadentials = new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
                {
-                    new Claim(JwtRegisteredClaimNames.Sub, "jsm33t"),
-                    new Claim(JwtRegisteredClaimNames.Typ, "admin"),
+                    new Claim(ClaimTypes.NameIdentifier, "Jasmeet"),
+                    new Claim(ClaimTypes.GivenName, "Jasmeet"),
+                    new Claim(ClaimTypes.Role, "none"),
                 };
 
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Audience"],

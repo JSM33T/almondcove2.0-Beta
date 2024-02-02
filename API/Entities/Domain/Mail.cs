@@ -4,7 +4,7 @@ namespace API.Entities.Domain
 {
     public class Mail
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         
         [Required]
         [StringLength(50)]

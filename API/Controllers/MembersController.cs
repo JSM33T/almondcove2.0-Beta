@@ -1,80 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using API.Data;
+using API.Entities.Domain.Members;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using API.Data;
-using API.Entities.Domain.Members;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+   
+    [Route("api/members")]
     [ApiController]
-    public class MembersController : ControllerBase
+    public class MembersController(AlmondDbContext context) : ControllerBase
     {
-        private readonly AlmondDbContext _context;
+        private readonly AlmondDbContext _context = context;
 
-        public MembersController(AlmondDbContext context)
-        {
-            _context = context;
-        }
 
-        // GET: api/Members
+
+
+        /*=============================================
+                            CRUD
+        =============================================*/
+
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Member>>> GetMembers()
-        {
-            return await _context.Members.ToListAsync();
-        }
+        public async Task<ActionResult<IEnumerable<Member>>> GetMembers() => await _context.Members.ToListAsync();
 
-        // GET: api/Members/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Member>> GetMember(int id)
+        public async Task<ActionResult<Member>> GetMember(Guid id)
         {
             var member = await _context.Members.FindAsync(id);
 
-            if (member == null)
-            {
-                return NotFound();
-            }
-
-            return member;
+            return member != null ? member : NotFound();
         }
 
-        // PUT: api/Members/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMember(int id, Member member)
-        {
-            if (id != member.Id)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(member).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MemberExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Members
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Member>> PostMember(Member member)
         {
@@ -84,9 +42,9 @@ namespace API.Controllers
             return CreatedAtAction("GetMember", new { id = member.Id }, member);
         }
 
-        // DELETE: api/Members/5
+        [Authorize(Roles = "NA")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMember(int id)
+        public async Task<IActionResult> DeleteMember(Guid id)
         {
             var member = await _context.Members.FindAsync(id);
             if (member == null)
@@ -100,7 +58,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        private bool MemberExists(int id)
+        private bool MemberExists(Guid id)
         {
             return _context.Members.Any(e => e.Id == id);
         }
