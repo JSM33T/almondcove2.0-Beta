@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { useState } from 'react';
+import { acPostData } from '../../../library/xhr';
 import { acToast } from '../../../library/global';
 
 export default function MailingList() {
@@ -11,22 +11,23 @@ export default function MailingList() {
         setEmail(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        axios.post('http://localhost:5190/api/Mails', { 
-            "origin": "react test",
-            "email": email 
-        })
-            .then(response => {
-                acToast("Success" + response.statusText);
-                console.log(response);
+        const resp = await acPostData('mails', {
+            "origin": "react homepage",
+            "email": email
+        });
 
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-                acToast("nah something wrong bro");
-            });
+        if(resp.type == 'ok')
+        {
+            acToast(resp.data);
+        }
+        else
+        {
+            acToast(resp.data);
+        }
+
     };
 
     return (
@@ -41,13 +42,13 @@ export default function MailingList() {
                             <div className="col-lg-6 offset-lg-3 text-center">
                                 <form className="subscription-form" onSubmit={handleSubmit}>
                                     <div className="input-group input-group-md rounded-pill">
-                                        <input className="form-control" 
-                                            type="email" 
-                                            placeholder="Email address" 
+                                        <input className="form-control"
+                                            type="email"
+                                            placeholder="Email address"
                                             value={email}
                                             onChange={handleChange}
                                             required
-                                          />
+                                        />
                                         <button className="btn btn-primary btn-md rounded-pill" type="submit">Subscribe</button>
                                     </div>
                                 </form>

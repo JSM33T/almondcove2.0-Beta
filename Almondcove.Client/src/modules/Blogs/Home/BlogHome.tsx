@@ -1,21 +1,24 @@
 //import { useEffect, useState } from "react";
 // import axios from "axios";
 
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 export default function BlogHome() {
 
 
-    //const [items, setItems] = useState([]);
+    const [items, setItems] = useState([]);
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:5190/api/categories')
-    //         .then(response => {
-    //             console.log(response.data)
-    //             setItems(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching data:', error);
-    //         });
-    // }, []);
+    useEffect(() => {
+        axios.get('https://localhost:7067/api/categories')
+            .then(response => {
+                console.log(response.data)
+                setItems(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
 
 
     return (
@@ -100,9 +103,6 @@ export default function BlogHome() {
                             </div>
                         </article>
 
-
-
-
                         <div className="row gy-3 align-items-center mt-lg-5 pt-2 pt-md-4 pt-lg-0">
                             <div className="col col-md-4 col-6 order-md-1 order-1">
                                 <div className="d-flex align-items-center">
@@ -149,14 +149,14 @@ export default function BlogHome() {
 
                                 <h4 className="pt-1 pt-lg-0 mt-lg-n2">Categories:</h4>
                                 <ul className="nav flex-column mb-lg-5 mb-4">
-                                    {/* {items.map((item, index) => (
+                                    {items.map((item, index) => (
                                         <li key={index} className="mb-2">
                                             <a className="nav-link d-flex p-0" href="#">
                                                 {item.name}
                                                 <span className="fs-sm text-body-secondary ms-2">(2)</span> 
                                             </a>
                                         </li>
-                                    ))} */}
+                                    ))}
                                 </ul>
 
 

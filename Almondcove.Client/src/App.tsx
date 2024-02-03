@@ -3,6 +3,8 @@ import { Navbar } from './components/shared/NavBar'
 import React, { Suspense, useEffect } from 'react';
 import { Footer } from './components/shared/Footer';
 import 'react-toastify/dist/ReactToastify.css';
+import './assets/styles/theme.css'
+import './assets/styles/almondcove.mod.css'
 import './library/vendor/almondcove.js'
 import SidePanel from './components/shared/SidePanel';
 
@@ -23,6 +25,7 @@ function App() {
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
+		console.log(import.meta.env.VITE_host)
 	}, [pathname])
 
 	return (
@@ -41,7 +44,7 @@ function App() {
 				</Suspense>
 			</main>
 			<ToastContainer
-				position="top-right"
+				position="bottom-right"
 				autoClose={5000}
 				hideProgressBar={false}
 				newestOnTop={false}
@@ -50,7 +53,6 @@ function App() {
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
-				theme="light"
 			/>
 			<BackToTop />
 			<Footer />

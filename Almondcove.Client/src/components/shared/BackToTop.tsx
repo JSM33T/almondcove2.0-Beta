@@ -1,47 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { initscrollToTop } from '../../library/global';
+import { BsArrowLeft } from 'react-icons/bs';
 
 const BackToTop = () => {
-  const [isVisible, setIsVisible] = useState(false);
 
-  const handleScroll = () => {
-    // Show the button when the user scrolls down, hide it when at the top
-    setIsVisible(window.pageYOffset > 100);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    initscrollToTop();
   }, []);
 
   return (
-    <button
-      className={`btn btn-scroll-top ${ isVisible ? 'show' : '' }`}
-      onClick={scrollToTop}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        className="h-5 w-5"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M5 10l7-7m0 0l7 7m-7-7v18"
-        />
+    <a className="btn-scroll-top show" href="#top" data-scroll="" aria-label="Scroll back to top">
+      <svg viewBox="0 0 40 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" style={{
+          strokeDasharray: '118.611',
+          strokeDashoffset: '66.7371'
+        }}>
+
+        </circle>
       </svg>
-    </button>
+      <BsArrowLeft className='mt-2 mx-2'/>
+    </a>
   );
 };
 

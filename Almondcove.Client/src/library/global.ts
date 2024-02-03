@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 // import Aos from "aos"
 import Parallax from "parallax-js";
@@ -27,7 +29,7 @@ function initSwiper() {
 
     // Thumbnails
     if (options.thumbnails) {
-      let images = options.thumbnails.images;
+      const images = options.thumbnails.images;
       options = Object.assign({}, options, {
         pagination: {
           el: options.thumbnails.el,
@@ -101,7 +103,10 @@ function initShuffle() {
 }
 
 function acToast(message: string) {
-  toast.dark(message);
+  const theme = window.localStorage.getItem('theme');
+  if(theme == 'dark') toast.dark(message);
+  else  if(theme == 'light') toast(message);
+  else toast.dark(message);
 }
 
 function initscrollToTop() {
