@@ -1,12 +1,12 @@
 using Almondcove.Api.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -30,6 +30,18 @@ builder.Services.AddDbContext<AlmondDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("almondCoveStr"));
 });
+
+builder.Services.AddMemoryCache();
+
+builder.Services.AddRateLimiter(o => o
+    .AddFixedWindowLimiter(policyName: "fixed", options =>
+    {
+        options.PermitLimit = 10;
+        options.Window = TimeSpan.FromSeconds(10);
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 5;
+
+    }));
 
 builder.Services.AddCors(options =>
 {
@@ -63,6 +75,7 @@ app.UseCors(builder =>
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseStaticFiles();
-app.MapControllers();
 
+app.MapControllers();
+app.UseRateLimiter();
 app.Run();

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Almondcove.Api.Data;
 using Almondcove.Api.Entities.Domain;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Almondcove.Api.Controllers
 {
@@ -80,12 +81,14 @@ namespace Almondcove.Api.Controllers
         }
 
         [HttpPost]
+        [EnableRateLimiting("fixed")]
         public async Task<ActionResult<Mail>> PostMail(Mail mail)
         {
             _context.MailingList.Add(mail);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMail", new { id = mail.Id }, mail);
+            //return CreatedAtAction("GetMail", new { id = mail.Id }, mail);
+            return Ok("Email submitted");
         }
 
         [HttpDelete("{id}")]

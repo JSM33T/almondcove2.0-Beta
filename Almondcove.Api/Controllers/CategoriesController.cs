@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Almondcove.Api.Data;
 using Almondcove.Api.Entities.Domain.Blogs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Almondcove.Api.Controllers
 {
@@ -18,17 +19,34 @@ namespace Almondcove.Api.Controllers
         private readonly AlmondDbContext _context = context;
 
 
-
-
         /*=============================================
                             CRUD
         =============================================*/
         // GET: api/Categories
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<ActionResult<IEnumerable<Category>>> GetBlogCategories()
+        //{
+        //    return await _context.BlogCategories.ToListAsync();
+        //}
+
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Category>>> GetBlogCategories()
+        public async Task<ActionResult<IEnumerable<Category>>> GetBlogCategories([FromServices] IMemoryCache cache)
         {
-            return await _context.BlogCategories.ToListAsync();
+            
+            if (cache.TryGetValue("BlogCategories", out List<Category> cachedCategories))
+            {
+             
+                return cachedCategories;
+            }
+            
+            var categories = await _context.BlogCategories.ToListAsync();
+
+            
+            cache.Set("BlogCategories", categories, TimeSpan.FromHours(5));
+
+            return categories;
         }
 
         // GET: api/Categories/5

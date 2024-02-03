@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Almondcove.Api.Data;
 using Almondcove.Api.Entities.Domain;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Almondcove.Api.Controllers
 {
@@ -50,8 +51,6 @@ namespace Almondcove.Api.Controllers
             return message;
         }
 
-        // PUT: api/Messages/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMessage(Guid id, Message message)
         {
@@ -84,12 +83,15 @@ namespace Almondcove.Api.Controllers
         // POST: api/Messages
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [EnableRateLimiting("fixed")]
         public async Task<ActionResult<Message>> PostMessage(Message message)
         {
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMessage", new { id = message.Id }, message);
+            //return CreatedAtAction("GetMessage", new { id = message.Id }, message);
+
+            return Ok("entry createddddd");
         }
 
         // DELETE: api/Messages/5

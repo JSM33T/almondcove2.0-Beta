@@ -110,13 +110,6 @@ namespace Almondcove.Api.Controllers
             return NoContent();
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetBlogDeets(string Slug, string Year)
-        //{
-            
-        //}
-
-
         private bool BlogPostExists(Guid id)
         {
             return _context.BlogPosts.Any(e => e.Id == id);
