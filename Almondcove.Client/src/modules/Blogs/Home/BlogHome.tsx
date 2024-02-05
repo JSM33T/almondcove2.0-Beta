@@ -3,6 +3,8 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Footer } from "../../../components/shared/Footer";
 
 export default function BlogHome() {
 
@@ -12,7 +14,7 @@ export default function BlogHome() {
     useEffect(() => {
         axios.get('https://localhost:7067/api/categories')
             .then(response => {
-                console.log(response.data)
+                
                 setItems(response.data);
             })
             .catch(error => {
@@ -39,7 +41,6 @@ export default function BlogHome() {
                     <div className="col-lg-9 pe-lg-4 pe-xl-5">
                         <h1 className="pb-3 pb-lg-4">Blog list with sidebar</h1>
 
-
                         <article className="row g-0 border-0 mb-4">
                             <a className="col-sm-5 bg-repeat-0 bg-size-cover bg-position-center rounded-5" href="blog-single-v1.html"
                                 style={{
@@ -50,7 +51,7 @@ export default function BlogHome() {
                             <div className="col-sm-7">
                                 <div className="pt-4 pb-sm-4 ps-sm-4 pe-lg-4">
                                     <h3>
-                                        <a href="blog-single-v1.html">Business strategy for a brand of vintage bags</a>
+                                        <Link to="/blog/2023/top-5-must-watch-series-for-beginners">Business strategy for a brand of vintage bags</Link>
                                     </h3>
                                     <p className="d-sm-none d-md-block">Morbi et massa fames ac scelerisque sit commodo dignissim faucibus vel quisque proin lectus et massa fames ac scelerisque fames velit diam sit...</p>
                                     <div className="d-flex flex-wrap align-items-center mt-n2">
@@ -218,6 +219,7 @@ export default function BlogHome() {
                     </aside>
                 </div>
             </div>
+            <Footer /> 
         </>
     )
 }

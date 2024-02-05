@@ -42,7 +42,7 @@ namespace Almondcove.Api.Controllers
             return CreatedAtAction("GetMember", new { id = member.Id }, member);
         }
 
-        [Authorize(Roles = "NA")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMember(Guid id)
         {

@@ -31,8 +31,6 @@ namespace Almondcove.Api.Controllers
             return Ok(latest3Blogs);
         }
 
-
-
         /*=============================================
                             CRUD
         =============================================*/
@@ -56,13 +54,22 @@ namespace Almondcove.Api.Controllers
             return blogPost;
         }
 
+        [HttpGet("getbyslug/{Slug}")]
+        public async Task<ActionResult<BlogPost>> GetBlogPost(string Slug)
+        {
+            var blogPost = await _context.BlogPosts.FirstOrDefaultAsync(b => b.Slug == Slug);
+
+            if (blogPost == null)
+            {
+                return NotFound(); 
+            }
+            return blogPost;
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBlogPost(Guid id, BlogPost blogPost)
         {
-            if (id != blogPost.Id)
-            {
-                return BadRequest();
-            }
+            if (id != blogPost.Id) return BadRequest();
 
             _context.Entry(blogPost).State = EntityState.Modified;
 
@@ -70,16 +77,9 @@ namespace Almondcove.Api.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch
             {
-                if (!BlogPostExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BlogPostExists(id) ? NotFound() : throw new Exception("something went wrong");
             }
 
             return NoContent();
@@ -99,10 +99,7 @@ namespace Almondcove.Api.Controllers
         public async Task<IActionResult> DeleteBlogPost(Guid id)
         {
             var blogPost = await _context.BlogPosts.FindAsync(id);
-            if (blogPost == null)
-            {
-                return NotFound();
-            }
+            if (blogPost == null) return NotFound();
 
             _context.BlogPosts.Remove(blogPost);
             await _context.SaveChangesAsync();

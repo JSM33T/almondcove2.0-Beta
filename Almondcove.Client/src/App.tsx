@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Navbar } from './components/shared/NavBar'
 import React, { Suspense, useEffect } from 'react';
-import { Footer } from './components/shared/Footer';
+//import { Footer } from './components/shared/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/styles/theme.css'
 import './assets/styles/almondcove.mod.css'
@@ -25,7 +25,6 @@ function App() {
 
 	useEffect(() => {
 		window.scrollTo(0, 0)
-		console.log(import.meta.env.VITE_host)
 	}, [pathname])
 
 	return (
@@ -39,7 +38,7 @@ function App() {
 						<Route path='/' element={<LazyHome />} />
 						<Route path='about' element={<LazyAbout />} />
 						<Route path='blogs' element={<LazyBlogHome />} />
-						<Route path='blog' element={<LazyBlogView />} />
+						<Route path='blog/:year/:slug' element={<LazyBlogView />} />
 					</Routes>
 				</Suspense>
 			</main>
@@ -55,7 +54,7 @@ function App() {
 				pauseOnHover
 			/>
 			<BackToTop />
-			<Footer />
+			{/* <Footer /> */}
 		</UserContextProvider>
 	)
 }

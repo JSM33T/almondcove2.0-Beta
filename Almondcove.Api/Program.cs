@@ -15,8 +15,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuer = false,
             ValidateAudience = false,
-            ValidateLifetime = false,
-            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = false,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
@@ -48,11 +48,26 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         builder =>
         {
-            builder.WithOrigins("http://localhost:5173/", "http://localhost:4200/")
+            builder.WithOrigins("http://localhost:5173/", "https://almondcove.in")
                             .AllowAnyHeader()
-                            .AllowAnyMethod();
+                            .AllowAnyMethod()
+                            .SetIsOriginAllowed((x) => true)
+                            .AllowCredentials(); ;
         });
 });
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowAll",
+//        builder =>
+//        {
+//            builder
+//                .AllowAnyOrigin()
+//                .AllowAnyMethod()
+//                .AllowAnyHeader()
+//                .AllowCredentials(); // Allow credentials (cookies, etc.)
+//        });
+//});
 
 
 var app = builder.Build();

@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\assets\" />
-    <Folder Include="wwwroot\content\blogs\2024\" />
     <Folder Include="wwwroot\content\gallery\" />
   </ItemGroup>
 

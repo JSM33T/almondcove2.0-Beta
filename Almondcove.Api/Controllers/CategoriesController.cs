@@ -31,7 +31,6 @@ namespace Almondcove.Api.Controllers
         //}
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Category>>> GetBlogCategories([FromServices] IMemoryCache cache)
         {
             

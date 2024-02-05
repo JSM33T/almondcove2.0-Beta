@@ -1,29 +1,30 @@
 import { useRef, useState } from "react"
 import { acToast } from "../../library/global";
+import { GrConfigure } from "react-icons/gr";
 
 
 export default function SidePanel() {
 
-const [Link,SetLink] = useState('https://almondcove.in');
-const preRef = useRef(null);
+    const [Link, SetLink] = useState('https://almondcove.in');
+    const preRef = useRef(null);
 
-function Selection(){
-    if (preRef.current) {
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(preRef.current);
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
-    navigator.clipboard.writeText(Link);
-    acToast("Link copied");
-}
+    function Selection() {
+        if (preRef.current) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(preRef.current);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+        navigator.clipboard.writeText(Link);
+        acToast("Link copied");
+    }
 
     return (
         <>
             <a className="position-fixed top-50 bg-light text-dark fw-medium border rounded-pill shadow text-decoration-none"
                 style={{
-                    right: '-1.75rem',
+                    right: '-1rem',
                     marginTop: '-1rem',
                     padding: '.25rem 1rem',
                     transform: 'rotate(-90deg)',
@@ -32,9 +33,8 @@ function Selection(){
                     zIndex: 1030,
                 }}
                 href="#customizer" data-bs-toggle="offcanvas">
-                <i className="ai-settings text-primary fs-base me-1 ms-n1"></i>
-                <i className="ai-music text-primary fs-base me-1 ms-n1"></i>
-                Panel
+                <GrConfigure />
+                &nbsp;&nbsp;Panel
             </a>
             <div className="offcanvas offcanvas-end" id="customizer" data-bs-scroll="true" data-bs-backdrop="false">
                 <div className="offcanvas-header border-bottom">
@@ -53,7 +53,7 @@ function Selection(){
                         <h5 className="mb-0">Shortcuts</h5>
                     </div>
 
-                    <button className="btn btn-primary w-100" id="share-btn" type="button" data-bs-toggle="modal" onClick={()=> SetLink(window.location.href)}
+                    <button className="btn btn-primary w-100" id="share-btn" type="button" data-bs-toggle="modal" onClick={() => SetLink(window.location.href)}
                         data-bs-target="#shareModal">
                         <i className="ai-code-curly fs-lg me-2 ms-n1"></i>
                         Share

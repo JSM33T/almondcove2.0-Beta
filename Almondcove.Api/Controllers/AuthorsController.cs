@@ -46,8 +46,6 @@ namespace Almondcove.Api.Controllers
             return authors;
         }
 
-        // PUT: api/Authors/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAuthors(Guid id, Authors authors)
         {
@@ -77,8 +75,6 @@ namespace Almondcove.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Authors
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Authors>> PostAuthors(Authors authors)
         {
@@ -88,7 +84,6 @@ namespace Almondcove.Api.Controllers
             return CreatedAtAction("GetAuthors", new { id = authors.Id }, authors);
         }
 
-        // DELETE: api/Authors/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthors(Guid id)
         {
