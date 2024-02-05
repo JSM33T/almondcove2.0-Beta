@@ -12,7 +12,7 @@ export default function BlogHome() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        axios.get('https://localhost:7067/api/categories')
+        axios.get('https://api.almondcove.in/api/categories')
             .then(response => {
                 
                 setItems(response.data);

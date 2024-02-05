@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Almondcove.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c0ad37e63c877e73226d1ab41aa2e1d7a7e5ad9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Almondcove.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Almondcove.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

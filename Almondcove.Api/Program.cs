@@ -48,7 +48,9 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         builder =>
         {
-            builder.WithOrigins("http://localhost:5173/", "https://almondcove.in")
+        
+            //builder.WithOrigins("http://localhost:5173/", "https://almondcove.in")
+            builder.WithOrigins("https://almond-cove2-beta.vercel.app/", "https://almondcove.in")
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                             .SetIsOriginAllowed((x) => true)
