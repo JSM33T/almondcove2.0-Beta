@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import Hero from "./_partials/Hero";
 import MailingList from "./_partials/MailingList";
-import { initParallax } from "../../library/global";
-import { Navbar } from "../../components/shared/NavBar";
+import { acToast, initParallax } from "../../library/global";
 import { Footer } from "../../components/shared/Footer";
 
 export default function Home() {
     useEffect(() => {
         initParallax();
+        acToast("home mounted");
     });
     return (
         <>
-        <Navbar />
             <Hero />
             <MailingList />
             <Footer /> 

@@ -14,7 +14,7 @@ export default function MailingList() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const resp = await acPostData('/api/mails', {
+        const resp = await acPostData('api/mails', {
             "origin": "react homepage",
             "email": email
         });

@@ -1,11 +1,8 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Navbar } from './components/shared/NavBar'
 import React, { Suspense, useEffect } from 'react';
-//import { Footer } from './components/shared/Footer';
 import 'react-toastify/dist/ReactToastify.css';
-import './assets/styles/theme.css'
-import './assets/styles/almondcove.mod.css'
-import './library/vendor/almondcove.js'
+//import './library/vendor/almondcove.js'
 import SidePanel from './components/shared/SidePanel';
 
 import BackToTop from './components/shared/BackToTop.tsx';
@@ -31,7 +28,7 @@ function App() {
 		<UserContextProvider>
 			<Loader />
 			<main className="page-wrapper">
-				<Navbar />
+			<Navbar />	
 				<SidePanel />
 				<Suspense fallback={<span></span>}>
 					<Routes>

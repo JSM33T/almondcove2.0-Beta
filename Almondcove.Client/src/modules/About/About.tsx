@@ -3,6 +3,12 @@ import { Footer } from "../../components/shared/Footer";
 import SocialLinks from "../../components/shared/SocialLinks";
 export default function About() {
 
+// function clearTheme(){
+//     const fff = document.getElementById('global-style');
+//     fff.innerHTML = "";
+// }
+
+
     return (
         <>
             <section className="position-relative pt-sm-4">
