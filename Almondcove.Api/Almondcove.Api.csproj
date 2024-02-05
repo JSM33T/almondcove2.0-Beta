@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Entities\DTO\Blogs\" />
     <Folder Include="wwwroot\assets\" />
     <Folder Include="wwwroot\content\gallery\" />
   </ItemGroup>

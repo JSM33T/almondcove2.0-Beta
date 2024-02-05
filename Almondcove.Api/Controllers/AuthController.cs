@@ -1,9 +1,7 @@
 ﻿using Almondcove.Api.Entities.DTO;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -11,7 +9,6 @@ using System.Text;
 namespace Almondcove.Api.Controllers
 {
     [Authorize(Roles = "NA")]
-    //to avoid beta phase access
     [Route("api/auth")]
     [ApiController]
     public class AuthController(IConfiguration configuration) : ControllerBase

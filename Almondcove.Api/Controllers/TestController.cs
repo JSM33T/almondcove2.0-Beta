@@ -28,23 +28,5 @@ namespace Almondcove.Api.Controllers
             return Ok(blogPost);
         }
 
-        [Authorize(Roles = "admin")]
-        [HttpGet("top3")]
-        public IActionResult GetTop3BlogsWithComments()
-        {
-            var latest3Blogs = _context.BlogPosts
-                 .OrderByDescending(bp => bp.DateCreated) // Order by date in descending order
-                 .Take(3) // Take the top 3 blogs
-                 .Select(bp => new
-                 {
-                     BlogPost = bp,
-                     NumberOfComments = bp.Comments.Count(),
-                     NumberOfLikes = bp.Likes.Count()
-                 })
-                 .ToList();
-
-            return Ok(latest3Blogs);
-        }
-
     }
 }

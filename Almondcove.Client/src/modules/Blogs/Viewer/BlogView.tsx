@@ -86,8 +86,6 @@ function BlogView() {
 
 					<aside className="col-lg-3 offset-xl-1 pt-4 pt-lg-0" style={{ marginTop: '-7rem' }}>
 						<div className="position-sticky top-0 mt-2 mt-md-3 mt-lg-0" style={{ marginTop: '7rem' }}>
-
-
 							<h4 className="mb-4">Share this post:</h4>
 							<div className="d-flex mt-n3 ms-n3 mb-lg-5 mb-4 pb-3 pb-lg-0">
 								<a className="btn btn-outline-secondary btn-icon btn-sm btn-instagram rounded-circle mt-3 ms-3" href="#" aria-label="Instagram">

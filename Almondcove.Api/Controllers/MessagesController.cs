@@ -15,15 +15,9 @@ namespace Almondcove.Api.Controllers
     [AllowAnonymous]
     [Route("api/messages")]
     [ApiController]
-    public class MessagesController : ControllerBase
+    public class MessagesController(AlmondDbContext context) : ControllerBase
     {
-        private readonly AlmondDbContext _context;
-
-        public MessagesController(AlmondDbContext context)
-        {
-            _context = context;
-        }
-
+        private readonly AlmondDbContext _context = context;
 
 
 

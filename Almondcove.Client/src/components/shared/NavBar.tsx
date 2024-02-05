@@ -84,7 +84,7 @@ export function Navbar() {
 
                         <a className="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="https://almondcove.in" target="_blank" rel="noopener">
                             <i className="ai-cart fs-xl me-2 ms-n1"></i>
-                            Live version
+                            Live Version
                         </a>
 
                         <button className="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
@@ -101,13 +101,13 @@ export function Navbar() {
                                     <Link className="nav-link" to="/about">About</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/blogs">Blogs</Link>
+                                    <Link className="nav-link disabled" to="/blogs">Blogs</Link>
                                 </li>
                             </ul>
                             <div className="d-sm-none p-3 mt-n3">
-                                <a className="btn btn-primary w-100 mb-1" href="https://themes.getbootstrap.com/product/around-multipurpose-template-ui-kit/" target="_blank" rel="noopener">
+                                <a className="btn btn-primary w-100 mb-1" href="https://almondcove.in/" target="_blank" rel="noopener">
                                     <i className="ai-cart fs-xl me-2 ms-n1"></i>
-                                    Buy now
+                                    Live Version
                                 </a>
                             </div>
                         </nav>

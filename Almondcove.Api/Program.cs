@@ -49,7 +49,7 @@ builder.Services.AddCors(options =>
         builder =>
         {
         
-            //builder.WithOrigins("http://localhost:5173/", "https://almondcove.in")
+          //builder.WithOrigins("http://localhost:5173/", "https://almondcove.in")
             builder.WithOrigins("https://almond-cove2-beta.vercel.app/", "https://almondcove.in")
                             .AllowAnyHeader()
                             .AllowAnyMethod()
@@ -58,20 +58,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowAll",
-//        builder =>
-//        {
-//            builder
-//                .AllowAnyOrigin()
-//                .AllowAnyMethod()
-//                .AllowAnyHeader()
-//                .AllowCredentials(); // Allow credentials (cookies, etc.)
-//        });
-//});
-
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -79,7 +65,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseHttpsRedirection();
 app.UseCors(builder =>

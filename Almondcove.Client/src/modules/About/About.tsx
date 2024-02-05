@@ -1,28 +1,8 @@
-import { BsInstagram ,BsFacebook,BsGithub} from "react-icons/bs";
+import { Link } from "react-router-dom";
 import { Footer } from "../../components/shared/Footer";
+import SocialLinks from "../../components/shared/SocialLinks";
 export default function About() {
 
-    
-    const socialLinks = [
-        {
-            platform: 'Instagram',
-            className: 'btn-instagram',
-            iconComponent: () => <BsInstagram/>,
-            url: 'https://instagram.com/jsm33t'
-        },
-        {
-            platform: 'Facebook',
-            className: 'btn-facebook',
-            iconComponent: () => <BsFacebook/>,
-            url: 'https://facebook.com/iamjsm33t'
-        },
-        {
-            platform: 'YouTube',
-            className: 'btn-youtube',
-            iconComponent: () => <BsGithub/>,
-            url: 'https://github.com/jsm33t'
-        }
-    ];
     return (
         <>
             <section className="position-relative pt-sm-4">
@@ -44,19 +24,10 @@ export default function About() {
                         I'm the kind of person who finds joy in exploring the mysterious and the uncharted places. With my trusty mobile camera, I'm on a mission to capture the hidden beauty and secrets that the cityscape holds.
                     </p>
                     <p className="fa-lg aos-init aos-animate" data-aos="fade" data-aos-duration="1200" data-aos-offset="50" data-disable-parallax-down="md">
-                        Do connect with me to get updates about the stuff i upload by <a href="/account" className="text-primary">signing up</a> to the AlmondCove
+                        Do connect with me to get updates about the stuff i upload by <Link to="/account" className="text-primary disabled">signing up</Link> to the AlmondCove
                     </p>
                     <div className="d-flex">
-                        {socialLinks.map((link, index) => (
-                            <a
-                                key={index}
-                                className={`btn btn-outline-secondary btn-icon btn-sm ${link.className} me-3`}
-                                target="_blank"
-                                href={link.url}
-                            >
-                             <link.iconComponent/>
-                            </a>
-                        ))}
+                        <SocialLinks rounded={false}/>
                     </div>
                 </div>
                 <div className="text-center pt-4 my-2 mt-lg-0 pt-lg-5 pb-sm-2 pb-md-4"><a className="btn btn-outline-primary rounded-pill" target="_blank" href="https://jsm33t.in">My Portfolio &nbsp;<i className="ai ai-external-link"></i></a> </div>

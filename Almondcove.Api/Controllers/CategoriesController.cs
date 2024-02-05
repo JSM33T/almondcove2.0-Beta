@@ -1,128 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Almondcove.Api.Data;
+﻿using Almondcove.Api.Data;
 using Almondcove.Api.Entities.Domain.Blogs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Almondcove.Api.Controllers
 {
     [Route("api/categories")]
     [ApiController]
-    public class CategoriesController(AlmondDbContext context) : ControllerBase
+    public class CategoriesController(AlmondDbContext context, IMemoryCache memoryCache) : ControllerBase
     {
         private readonly AlmondDbContext _context = context;
+        private readonly IMemoryCache _cache = memoryCache;
 
-
-        /*=============================================
-                            CRUD
-        =============================================*/
-        // GET: api/Categories
         //[HttpGet]
         //[AllowAnonymous]
         //public async Task<ActionResult<IEnumerable<Category>>> GetBlogCategories()
         //{
-        //    return await _context.BlogCategories.ToListAsync();
+
+        //    if (_cache.TryGetValue("BlogCategories", out List<Category> cachedCategories))
+        //    {
+        //        return cachedCategories;
+        //    }
+
+        //    var categories = await _context.BlogCategories.ToListAsync();
+
+        //    _cache.Set("BlogCategories", categories, TimeSpan.FromHours(5));
+
+        //    return categories;
         //}
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetBlogCategories([FromServices] IMemoryCache cache)
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetBlogCategories()
         {
-            
-            if (cache.TryGetValue("BlogCategories", out List<Category> cachedCategories))
+            if (_cache.TryGetValue("BlogCategories", out List<CategoryDTO> cachedCategories))
             {
-             
                 return cachedCategories;
             }
-            
+
             var categories = await _context.BlogCategories.ToListAsync();
+            var categoryDtos = categories.Select(category => new CategoryDTO
+            {
+                Name = category.Name,
+                Description = category.Description,
+            }).ToList();
 
-            
-            cache.Set("BlogCategories", categories, TimeSpan.FromHours(5));
+            _cache.Set("BlogCategories", categoryDtos, TimeSpan.FromHours(5));
 
-            return categories;
+            return categoryDtos;
         }
 
-        // GET: api/Categories/5
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(Guid id)
         {
             var category = await _context.BlogCategories.FindAsync(id);
-
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return category;
+            return category != null ? category : NotFound();
         }
 
-        // PUT: api/Categories/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(Guid id, Category category)
-        {
-            if (id != category.Id)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(category).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Categories
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
+        public async Task<IActionResult> PostCategory(CategoryDTO categoryDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var category = new Category
+            {
+                Name = categoryDto.Name,
+                Description = categoryDto.Description,
+            };
+
             _context.BlogCategories.Add(category);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCategory", new { id = category.Id }, category);
+            return Ok();
         }
 
-        // DELETE: api/Categories/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(Guid id)
-        {
-            var category = await _context.BlogCategories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
 
-            _context.BlogCategories.Remove(category);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool CategoryExists(Guid id)
-        {
-            return _context.BlogCategories.Any(e => e.Id == id);
-        }
     }
 }

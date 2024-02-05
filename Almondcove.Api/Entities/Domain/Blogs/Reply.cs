@@ -7,4 +7,10 @@
         public DateTime DateCreated { get; set; }
         public Guid CommentId { get; set; }
     }
+
+    public class ReplyDTO
+    {
+        public string Content { get; set; }
+        public Guid CommentId { get; set; }
+    }
 }

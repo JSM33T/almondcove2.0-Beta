@@ -13,7 +13,9 @@ namespace Almondcove.Api.Controllers
     {
         private readonly AlmondDbContext _context = context;
 
-
+        /*=======================================================================================================================================
+                                                            GET TOP 3 BLOGS
+        =======================================================================================================================================*/
         [HttpGet("top3")]
         public async Task<IActionResult> GetTopBlogs()
         {
@@ -31,6 +33,18 @@ namespace Almondcove.Api.Controllers
             return Ok(latest3Blogs);
         }
 
+
+        /*=======================================================================================================================================
+                                                                    GET BLOG BY SLUG
+        =======================================================================================================================================*/
+
+        [HttpGet("getbyslug/{Slug}")]
+        public async Task<ActionResult<BlogPost>> GetBlogPost(string Slug)
+        {
+            var blogPost = await _context.BlogPosts.FirstOrDefaultAsync(b => b.Slug == Slug);
+            return blogPost != null ? Ok(blogPost) : NotFound();
+        }
+
         /*=============================================
                             CRUD
         =============================================*/
@@ -42,29 +56,14 @@ namespace Almondcove.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<BlogPost>> GetBlogPost(Guid id)
         {
             var blogPost = await _context.BlogPosts.FindAsync(id);
-
-            if (blogPost == null)
-            {
-                return NotFound();
-            }
-
-            return blogPost;
+            return blogPost != null ? Ok(blogPost) : BadRequest();
         }
 
-        [HttpGet("getbyslug/{Slug}")]
-        public async Task<ActionResult<BlogPost>> GetBlogPost(string Slug)
-        {
-            var blogPost = await _context.BlogPosts.FirstOrDefaultAsync(b => b.Slug == Slug);
-
-            if (blogPost == null)
-            {
-                return NotFound(); 
-            }
-            return blogPost;
-        }
+       
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBlogPost(Guid id, BlogPost blogPost)
@@ -88,7 +87,7 @@ namespace Almondcove.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<BlogPost>> PostBlogPost(BlogPost blogPost)
         {
-            _context.BlogPosts.Add(blogPost);
+             _context.BlogPosts.Add(blogPost);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetBlogPost", new { id = blogPost.Id }, blogPost);
