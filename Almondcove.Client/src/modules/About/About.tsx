@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
-import { Footer } from "../../components/shared/Footer";
 import SocialLinks from "../../components/shared/SocialLinks";
 export default function About() {
-
-// function clearTheme(){
-//     const fff = document.getElementById('global-style');
-//     fff.innerHTML = "";
-// }
 
 
     return (
@@ -38,7 +32,6 @@ export default function About() {
                 </div>
                 <div className="text-center pt-4 my-2 mt-lg-0 pt-lg-5 pb-sm-2 pb-md-4"><a className="btn btn-outline-primary rounded-pill" target="_blank" href="https://jsm33t.in">My Portfolio &nbsp;<i className="ai ai-external-link"></i></a> </div>
             </section>
-            <Footer /> 
         </>
     )
 }

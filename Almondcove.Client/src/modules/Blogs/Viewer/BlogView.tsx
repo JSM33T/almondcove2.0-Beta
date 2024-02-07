@@ -1,11 +1,9 @@
 import { useState, useEffect, Suspense } from 'react';
 import { Link, useParams } from 'react-router-dom';
-// import Markdown from 'react-markdown';
 import { BiSolidLike, BiComment } from 'react-icons/bi';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { acGetData } from '../../../library/xhr';
-import { Footer } from '../../../components/shared/Footer';
 import { BsFacebook, BsInstagram, BsTelegram, BsTwitter } from 'react-icons/bs';
 
 function BlogView() {
@@ -17,7 +15,7 @@ function BlogView() {
 	useEffect(() => {
 		const fetchMarkdownContent = async () => {
 			try {
-				const response = await fetch(`https://localhost:7067/content/blogs/${year}/${slug}/content.md`);
+				const response = await fetch(`${import.meta.env.VITE_HOST}content/blogs/${year}/${slug}/content.md`);
 				const data = await response.text();
 				setMarkdownContent(data);
 			} catch (error) {
@@ -40,7 +38,8 @@ function BlogView() {
 
 	}, []);
 
-	const { title, dateCreated } = blogData || {};
+	const { title, dateCreated, tags } = blogData || {};
+	const tagArray = tags ? tags.split(",").map(tag => tag.trim()) : [];
 	return (
 		<>
 
@@ -55,9 +54,8 @@ function BlogView() {
 				</nav>
 
 				<div className="row">
-
-					<div className="col-lg-12 pb-2 pb-lg-0 mb-4 mb-lg-0">
-						<h1 className="display-4 pb-2 pb-lg-3"><Suspense fallback={<>loading...</>}>{title}</Suspense></h1>
+					<div className="col-lg-12 pb-2">
+						<h1 className="display-4 pb-2 pb-lg-3"><Suspense fallback={<><span className="placeholder col-12 placeholder-lg"></span></>}>{title}</Suspense></h1>
 						<div className="d-flex flex-wrap align-items-center mt-n2">
 							<span className="text-body-secondary fs-sm fw-normal p-0 mt-2 me-3">
 								12
@@ -76,8 +74,8 @@ function BlogView() {
 					</div>
 				</div>
 			</section>
-			<section className="container py-5 my-md-2 my-lg-3 my-xl-4">
-				<div className="row pt-xxl-2">
+			<section className="container">
+				<div className="row">
 					<div className="col-lg-9 col-xl-8 pe-lg-4 pe-xl-0">
 						<Suspense fallback={<span>loading content....</span>}>
 							<ReactMarkdown rehypePlugins={[rehypeRaw]}>{markdownContent}</ReactMarkdown>
@@ -89,25 +87,24 @@ function BlogView() {
 							<h4 className="mb-4">Share this post:</h4>
 							<div className="d-flex mt-n3 ms-n3 mb-lg-5 mb-4 pb-3 pb-lg-0">
 								<a className="btn btn-outline-secondary btn-icon btn-sm btn-instagram rounded-circle mt-3 ms-3" href="#" aria-label="Instagram">
-									<BsInstagram/>
+									<BsInstagram />
 								</a>
 								<a className="btn btn-outline-secondary btn-icon btn-sm btn-facebook rounded-circle mt-3 ms-3" href="#" aria-label="Facebook">
-									<BsFacebook/>
+									<BsFacebook />
 								</a>
 								<a className="btn btn-outline-secondary btn-icon btn-sm btn-telegram rounded-circle mt-3 ms-3" href="#" aria-label="Telegram">
-									<BsTelegram/>
+									<BsTelegram />
 								</a>
 								<a className="btn btn-outline-secondary btn-icon btn-sm btn-x rounded-circle mt-3 ms-3" href="#" aria-label="X">
-									<BsTwitter/>
+									<BsTwitter />
 								</a>
 							</div>
 
-							<h4 className="pt-xl-1 mb-4">Relevant topics:</h4>
+							<h4 className="pt-xl-1 mb-4">Tags:</h4>
 							<div className="d-flex flex-wrap mt-n3 ms-n3 mb-lg-5 mb-4 pb-3 pb-lg-0">
-								<a className="btn btn-outline-secondary rounded-pill mt-3 ms-3" href="#">Nature</a>
-								<a className="btn btn-outline-secondary rounded-pill mt-3 ms-3" href="#">Inspiration</a>
-								<a className="btn btn-outline-secondary rounded-pill mt-3 ms-3" href="#">Travel</a>
-								<a className="btn btn-outline-secondary rounded-pill mt-3 ms-3" href="#">Psychology</a>
+								{tagArray.map((tag: string, index: number) => (
+									<Link className="btn btn-outline-secondary rounded-pill mt-3 ms-3" to={'/blogs/tags/' + tag} key={index}>{tag}</Link>
+								))}
 							</div>
 
 
@@ -138,7 +135,6 @@ function BlogView() {
 					</aside>
 				</div>
 			</section>
-			<Footer /> 
 		</>
 
 
