@@ -13,10 +13,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.TokenValidationParameters = new()
         {
-            ValidateIssuer = false,
-            ValidateAudience = false,
+            ValidateIssuer = true,
+            ValidateAudience = true,
             ValidateLifetime = true,
-            ValidateIssuerSigningKey = false,
+            ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
@@ -48,32 +48,52 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         builder =>
         {
-        
-          //builder.WithOrigins("http://localhost:5173/", "https://almondcove.in")
-            builder.WithOrigins("https://almond-cove2-beta.vercel.app/", "https://almondcove.in")
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .SetIsOriginAllowed((x) => true)
-                            .AllowCredentials(); ;
+
+            builder.WithOrigins("https://almond-cove2-beta.vercel.app/", "http://localhost:5173/", "https://almondcove.in")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .SetIsOriginAllowed((x) => true)
+                                .AllowCredentials(); ;
         });
 });
 
+
+builder.Services.AddCors(options =>
+      {
+          options.AddPolicy("DevelopmentPolicy",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                    });
+
+          options.AddPolicy("ProductionPolicy", builder =>
+          {
+              builder.WithOrigins("https://almond-cove2-beta.vercel.app/", "https://almondcove.in")
+                     .AllowAnyHeader()
+                     .AllowAnyMethod();
+          });
+      });
+
 var app = builder.Build();
+
+app.UseHttpsRedirection();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("DevelopmentPolicy");
 }
 
-app.UseHttpsRedirection();
-app.UseCors(builder =>
+if (app.Environment.IsProduction())
 {
-    builder
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader();
-});
+    app.UseCors("ProductionPolicy");
+}
+
+
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseStaticFiles();

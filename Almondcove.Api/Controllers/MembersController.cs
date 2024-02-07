@@ -47,10 +47,8 @@ namespace Almondcove.Api.Controllers
         public async Task<IActionResult> DeleteMember(Guid id)
         {
             var member = await _context.Members.FindAsync(id);
-            if (member == null)
-            {
-                return NotFound();
-            }
+
+            if (member == null) return NotFound();
 
             _context.Members.Remove(member);
             await _context.SaveChangesAsync();

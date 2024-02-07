@@ -48,7 +48,7 @@ namespace Almondcove.Api.Controllers
             }).ToList();
 
             _cache.Set("BlogCategories", categoryDtos, TimeSpan.FromHours(5));
-
+            Thread.Sleep(2000);
             return categoryDtos;
         }
 

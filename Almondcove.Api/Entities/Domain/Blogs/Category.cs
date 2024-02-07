@@ -7,6 +7,8 @@ namespace Almondcove.Api.Entities.Domain.Blogs
         public Guid Id { get; set; }
         [StringLength(50)]
         public string Name { get; set; }
+        [StringLength(50)]
+        public string Slug { get; set; }
         [StringLength(200)]
         public string Description { get; set; }
         public List<BlogPost> Posts { get; set; }
@@ -16,6 +18,9 @@ namespace Almondcove.Api.Entities.Domain.Blogs
     {
         [StringLength(50)]
         public string Name { get; set; }
+        [StringLength(50)]
+        public string Slug { get; set; }
+
         [StringLength(200)]
         public string Description { get; set; }
     }
