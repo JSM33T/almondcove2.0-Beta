@@ -5,41 +5,65 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { acGetData } from '../../../library/xhr';
 import { BsFacebook, BsInstagram, BsTelegram, BsTwitter } from 'react-icons/bs';
+import axios from 'axios';
+import fm from 'front-matter';
 
 function BlogView() {
 
 	const [markdownContent, setMarkdownContent] = useState('');
 	const [blogData, setBlogData] = useState(null);
 	const { year, slug } = useParams();
+	const [frontMatter, setFrontMatter] = useState({ title: '', description: '' });
+	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		const fetchMarkdownContent = async () => {
+		// const fetchMarkdownContent = async () => {
+		// 	try {
+		// 		const response = await fetch(`${import.meta.env.VITE_HOST}content/blogs/${year}/${slug}/content.md`);
+		// 		const data = await response.text();
+		// 		setMarkdownContent(data);
+		// 	} catch (error) {
+		// 		console.error('Error fetching Markdown content:', error);
+		// 	}
+
+		// };
+
+		const fetchMarkdown = async () => {
 			try {
-				const response = await fetch(`${import.meta.env.VITE_HOST}content/blogs/${year}/${slug}/content.md`);
-				const data = await response.text();
-				setMarkdownContent(data);
+				const response = await axios.get(`${import.meta.env.VITE_HOST}content/blogs/${year}/${slug}/content.md`);
+				const { attributes, body } = fm(response.data);
+				setFrontMatter(attributes);
+				setMarkdownContent(body);
 			} catch (error) {
-				console.error('Error fetching Markdown content:', error);
+				setError(`Error fetching Markdown content: ${error.message}`);
 			}
 		};
+
+		fetchMarkdown();
 
 		const fetchBlogDeets = async () => {
 			try {
 				const response = await acGetData(`api/blogs/getbyslug/${slug}`);
-				console.log(response.data);
 				setBlogData(response.data);
 			} catch (error) {
 				console.error('Error fetching Markdown content:', error);
 			}
 		};
 
-		fetchMarkdownContent();
+		//fetchMarkdownContent();
 		fetchBlogDeets();
 
 	}, []);
 
 	const { title, dateCreated, tags } = blogData || {};
 	const tagArray = tags ? tags.split(",").map(tag => tag.trim()) : [];
+
+
+	if (error) {
+		return <div>Error: {error}</div>;
+	}
+
+
 	return (
 		<>
 
@@ -55,7 +79,7 @@ function BlogView() {
 
 				<div className="row">
 					<div className="col-lg-12 pb-2">
-						<h1 className="display-4 pb-2 pb-lg-3"><Suspense fallback={<><span className="placeholder col-12 placeholder-lg"></span></>}>{title}</Suspense></h1>
+						<h1 className="display-4 pb-2 pb-lg-3">{frontMatter.title}</h1>
 						<div className="d-flex flex-wrap align-items-center mt-n2">
 							<span className="text-body-secondary fs-sm fw-normal p-0 mt-2 me-3">
 								12
@@ -142,3 +166,5 @@ function BlogView() {
 }
 
 export default BlogView;
+
+

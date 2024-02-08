@@ -103,6 +103,9 @@ export function Navbar() {
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/blogs">Blogs</Link>
                                 </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/music">Music</Link>
+                                </li>
                             </ul>
                             <div className="d-sm-none p-3 mt-n3">
                                 <a className="btn btn-primary w-100 mb-1" href="https://almondcove.in/" target="_blank" rel="noopener">

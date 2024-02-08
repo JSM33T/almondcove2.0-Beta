@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
-// import Aos from "aos"
+import Aos from "aos"
 import Parallax from "parallax-js";
 import { toast } from 'react-toastify';
 // import Shuffle from "shufflejs";

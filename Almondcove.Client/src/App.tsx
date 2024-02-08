@@ -11,6 +11,7 @@ import Loader from './components/shared/Loader.tsx';
 //import { Footer } from './components/shared/Footer.tsx';
 
 const LazyHome = React.lazy(() => import('./modules/Home/Home'));
+const LazyMusic = React.lazy(() => import('./modules/Music/MusicHome'));
 const LazyAbout = React.lazy(() => import('./modules/About/About'));
 const LazyBlogHome = React.lazy(() => import('./modules/Blogs/Home/BlogHome.tsx'));
 const LazyBlogView = React.lazy(() => import('./modules/Blogs/Viewer/BlogView.tsx'));
@@ -35,6 +36,10 @@ function App() {
 					<Routes>
 						<Route path='/' element={<LazyHome />} />
 						<Route path='about' element={<LazyAbout />} />
+						<Route path='music' element={<LazyMusic />} />
+
+
+
 						<Route path='blogs' element={<LazyBlogHome />} />
 						<Route path='blogs/:categorize/:slug' element={<LazyBlogHome />} />
 						<Route path='blog/:year/:slug' element={<LazyBlogView />} />
