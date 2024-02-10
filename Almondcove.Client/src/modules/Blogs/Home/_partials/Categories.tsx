@@ -19,7 +19,7 @@ export default function Categories() {
             <ul className="nav flex-column mb-lg-5 mb-4">
                 {items.map((item, index) => (
                     <li key={index} className="mb-2">
-                        <Link className="nav-link d-flex p-0" to={'/blogs/category/' + item.name.toLowerCase()}>
+                        <Link className="nav-link d-flex p-0" to={'/blogs/category/' + item.slug}>
                             {item.name}
                             <span className="fs-sm text-body-secondary ms-2">(2)</span>
                         </Link>

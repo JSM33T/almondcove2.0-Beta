@@ -28,8 +28,8 @@ namespace Almondcove.Api.Controllers
                   NumberOfComments = bp.Comments.Count(),
                   NumberOfLikes = bp.Likes.Count()
               })
+              .AsNoTracking()
               .ToListAsync();
-
             return Ok(latest3Blogs);
         }
 

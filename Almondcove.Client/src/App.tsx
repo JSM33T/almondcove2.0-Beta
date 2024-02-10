@@ -8,13 +8,15 @@ import BackToTop from './components/shared/BackToTop.tsx';
 import UserContextProvider from './context/UserContextProvider.tsx';
 import { ToastContainer } from 'react-toastify';
 import Loader from './components/shared/Loader.tsx';
-//import { Footer } from './components/shared/Footer.tsx';
+import { Footer } from './components/shared/Footer.tsx';
 
 const LazyHome = React.lazy(() => import('./modules/Home/Home'));
 const LazyMusic = React.lazy(() => import('./modules/Music/MusicHome'));
+const LazyGallery = React.lazy(() => import('./modules/Gallery/GalleryHome'));
 const LazyAbout = React.lazy(() => import('./modules/About/About'));
 const LazyBlogHome = React.lazy(() => import('./modules/Blogs/Home/BlogHome.tsx'));
 const LazyBlogView = React.lazy(() => import('./modules/Blogs/Viewer/BlogView.tsx'));
+
 
 
 function App() {
@@ -22,7 +24,10 @@ function App() {
 	const { pathname } = useLocation();
 
 	useEffect(() => {
-		window.scrollTo(0, 0)
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
 
 	}, [pathname])
 
@@ -37,6 +42,7 @@ function App() {
 						<Route path='/' element={<LazyHome />} />
 						<Route path='about' element={<LazyAbout />} />
 						<Route path='music' element={<LazyMusic />} />
+						<Route path='gallery' element={<LazyGallery />} />
 
 
 
@@ -58,7 +64,7 @@ function App() {
 				pauseOnHover
 			/>
 			<BackToTop />
-			{/* <Footer /> */}
+			<Footer />
 		</UserContextProvider>
 	)
 }

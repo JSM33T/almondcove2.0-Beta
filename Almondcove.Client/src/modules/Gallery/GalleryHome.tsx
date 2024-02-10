@@ -1,16 +1,16 @@
 import { useEffect } from "react"
 
-export default function GalleryHome() {
+export default function MusicHome() {
 
 useEffect(()=>{
 },[])
 
     return (
         <div>
-            <section className="section_suspense  container py-5 mt-5 mb-xl-3 mb-xxl-5">
+            <section className="footer_suspense container py-5 mt-5 mb-xl-3 mb-xxl-5">
                 <div className="row pt-2">
                     <div className="col-lg-6 d-flex flex-column mb-4 mb-lg-0 pb-sm-3 pb-lg-0 aos-init aos-animate" data-aos="fade" data-aos-duration="500" data-aos-offset="50" data-disable-parallax-down="md" data-disable="md">
-                        <h1 className="display-1 text-uppercase fw-bold mt-auto mb-2">the <span className="fw-normal">Almondcove</span> music <span className="d-none d-md-inline-block align-middle ms-4" style={{width : '120px', height: '2px' , backgroundColor: 'currentColor'}}></span></h1>
+                        <h1 className="display-1 text-uppercase fw-bold mt-auto mb-2">the <span className="fw-normal">Almondcove</span> gallery<span className="d-none d-md-inline-block align-middle ms-4" style={{width : '120px', height: '2px' , backgroundColor: 'currentColor'}}></span></h1>
                         <div className="d-flex align-items-center py-4 py-lg-5">
                             <div className="flex-shrink-sm-0" style={{ color: 'currentColor' }}>
                                 <svg style={{ marginLeft: '0px' }} version="1.0" xmlns="http://www.w3.org/2000/svg" width="75.000000pt" height="24.000000pt" viewBox="0 0 1000.000000 300.000000" preserveAspectRatio="xMidYMid meet">

@@ -6,10 +6,10 @@ using Almondcove.Api.Entities.Domain.Members;
 namespace Almondcove.Api.Data
 {
     public class AlmondDbContext(DbContextOptions options) : DbContext(options)
-    {
+    {   
         public DbSet<Mail> MailingList{ get; set; }
         public DbSet<BlogPost> BlogPosts { get; set; }
-        public DbSet<Category> BlogCategories { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Favourite> Favourites { get; set; }
         public DbSet<Member> Members{ get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -24,6 +24,11 @@ namespace Almondcove.Api.Data
                 .HasIndex(e => new { e.MemberId, e.BlogPostId})
                 .IsUnique();
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        //}
 
 
     }

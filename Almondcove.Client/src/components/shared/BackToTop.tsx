@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { initscrollToTop } from '../../library/global';
-import { BsArrowLeft } from 'react-icons/bs';
 
 const BackToTop = () => {
 
@@ -19,7 +18,7 @@ const BackToTop = () => {
 
         </circle>
       </svg>
-      <BsArrowLeft className='mt-2 mx-2'/>
+      <i className="ai-arrow-up"></i>
     </a>
   );
 };

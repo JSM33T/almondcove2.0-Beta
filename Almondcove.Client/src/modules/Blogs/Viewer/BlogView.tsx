@@ -5,41 +5,24 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { acGetData } from '../../../library/xhr';
 import { BsFacebook, BsInstagram, BsTelegram, BsTwitter } from 'react-icons/bs';
-import axios from 'axios';
-import fm from 'front-matter';
 
 function BlogView() {
 
 	const [markdownContent, setMarkdownContent] = useState('');
 	const [blogData, setBlogData] = useState(null);
 	const { year, slug } = useParams();
-	const [frontMatter, setFrontMatter] = useState({ title: '', description: '' });
-	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		// const fetchMarkdownContent = async () => {
-		// 	try {
-		// 		const response = await fetch(`${import.meta.env.VITE_HOST}content/blogs/${year}/${slug}/content.md`);
-		// 		const data = await response.text();
-		// 		setMarkdownContent(data);
-		// 	} catch (error) {
-		// 		console.error('Error fetching Markdown content:', error);
-		// 	}
-
-		// };
-
-		const fetchMarkdown = async () => {
+		const fetchMarkdownContent = async () => {
 			try {
-				const response = await axios.get(`${import.meta.env.VITE_HOST}content/blogs/${year}/${slug}/content.md`);
-				const { attributes, body } = fm(response.data);
-				setFrontMatter(attributes);
-				setMarkdownContent(body);
+				const response = await fetch(`${import.meta.env.VITE_HOST}content/blogs/${year}/${slug}/content.md`);
+				const data = await response.text();
+				setMarkdownContent(data);
 			} catch (error) {
-				setError(`Error fetching Markdown content: ${error.message}`);
+				console.error('Error fetching Markdown content:', error);
 			}
-		};
 
-		fetchMarkdown();
+		};
 
 		const fetchBlogDeets = async () => {
 			try {
@@ -50,18 +33,13 @@ function BlogView() {
 			}
 		};
 
-		//fetchMarkdownContent();
+		fetchMarkdownContent();
 		fetchBlogDeets();
 
 	}, []);
 
 	const { title, dateCreated, tags } = blogData || {};
-	const tagArray = tags ? tags.split(",").map(tag => tag.trim()) : [];
-
-
-	if (error) {
-		return <div>Error: {error}</div>;
-	}
+	const tagArray = tags ? tags.split(",").map((tag: string) => tag.trim()) : [];
 
 
 	return (
@@ -73,13 +51,13 @@ function BlogView() {
 					<ol className="pt-lg-3 pb-lg-4 pb-2 breadcrumb">
 						<li className="breadcrumb-item"><Link to="/">Home</Link></li>
 						<li className="breadcrumb-item"><Link to="/blogs">Blog</Link></li>
-						<li className="breadcrumb-item active" aria-current="page">{slug}</li>
+						<li className="breadcrumb-item active" aria-current="page">{title}</li>
 					</ol>
 				</nav>
 
 				<div className="row">
 					<div className="col-lg-12 pb-2">
-						<h1 className="display-4 pb-2 pb-lg-3">{frontMatter.title}</h1>
+						<h1 className="display-4 pb-2 pb-lg-3">{title}</h1>
 						<div className="d-flex flex-wrap align-items-center mt-n2">
 							<span className="text-body-secondary fs-sm fw-normal p-0 mt-2 me-3">
 								12
@@ -106,8 +84,8 @@ function BlogView() {
 						</Suspense>
 					</div>
 
-					<aside className="col-lg-3 offset-xl-1 pt-4 pt-lg-0" style={{ marginTop: '-7rem' }}>
-						<div className="position-sticky top-0 mt-2 mt-md-3 mt-lg-0" style={{ marginTop: '7rem' }}>
+					<aside className="col-lg-3 offset-xl-1 pt-4 pt-lg-0" style={{ marginTop: '3rem' }}>
+						<div className="position-sticky top-0 mt-2 mt-md-3 mt-lg-0" style={{ marginTop: '10rem' }}>
 							<h4 className="mb-4">Share this post:</h4>
 							<div className="d-flex mt-n3 ms-n3 mb-lg-5 mb-4 pb-3 pb-lg-0">
 								<a className="btn btn-outline-secondary btn-icon btn-sm btn-instagram rounded-circle mt-3 ms-3" href="#" aria-label="Instagram">

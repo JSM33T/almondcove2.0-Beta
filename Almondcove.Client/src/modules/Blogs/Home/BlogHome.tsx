@@ -1,6 +1,3 @@
-//import { useEffect, useState } from "react";
-// import axios from "axios";
-import { Footer } from "../../../components/shared/Footer";
 import Categories from "./_partials/Categories";
 import Articles from "./_partials/Articles";
 import { Link, useParams } from "react-router-dom";
@@ -21,38 +18,10 @@ export default function BlogHome() {
 
                 <div className="row mb-md-2 mb-xl-4">
                     <div className="col-lg-9 pe-lg-4 pe-xl-5">
-                        <h1 className="pb-3 pb-lg-4">Blog- "{slug}"</h1>
-
-                        <Articles />
-                        {/* <div className="row gy-3 align-items-center mt-lg-5 pt-2 pt-md-4 pt-lg-0">
-                            <div className="col col-md-4 col-6 order-md-1 order-1">
-                                <div className="d-flex align-items-center">
-                                    <span className="text-body-secondary fs-sm">Show</span>
-                                    <select className="form-select form-select-flush w-auto">
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="25">25</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col col-md-4 col-12 order-md-2 order-3 text-center">
-                                <button className="btn btn-primary w-md-auto w-100" type="button">Load more posts</button>
-                            </div>
-                            <div className="col col-md-4 col-6 order-md-3 order-2">
-                                <nav aria-label="Page navigation">
-                                    <ul className="pagination pagination-sm justify-content-end">
-                                        <li className="page-item active" aria-current="page">
-                                            <span className="page-link">1<span className="visually-hidden">(current)</span></span>
-                                        </li>
-                                        <li className="page-item"><a className="page-link" href="#">2</a></li>
-                                        <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                        <li className="page-item"><a className="page-link" href="#">4</a></li>
-                                        <li className="page-item"><a className="page-link" href="#">5</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div> */}
+                        <h1 className="pb-3 pb-lg-4">Blogs</h1>
+                        <Suspense fallback={<>loadingggg</>}>
+                            <Articles />
+                        </Suspense>
                     </div>
 
                     <aside className="col-lg-3">
@@ -75,15 +44,14 @@ export default function BlogHome() {
                                     <span className="placeholder placeholder-sm col-8"></span>
                                 </p>
                                 }>
-                                     <Categories />
+                                    <Categories />
                                 </Suspense>
-                               
+
                             </div>
                         </div>
                     </aside>
                 </div>
             </div>
-            <Footer />
         </>
     )
 }

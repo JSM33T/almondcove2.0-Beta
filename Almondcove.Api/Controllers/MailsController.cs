@@ -22,9 +22,6 @@ namespace Almondcove.Api.Controllers
             _context = context;
         }
 
-
-
-
         /*=============================================
                             CRUD
         =============================================*/

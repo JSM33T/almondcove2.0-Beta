@@ -33,7 +33,9 @@
   <ItemGroup>
     <Folder Include="Entities\DTO\Blogs\" />
     <Folder Include="wwwroot\assets\" />
-    <Folder Include="wwwroot\content\gallery\" />
+    <Folder Include="wwwroot\content\gallery\2020\garden-state-2023\thumbs\" />
+    <Folder Include="wwwroot\content\gallery\2020\garden-state-2023\lossless\" />
+    <Folder Include="wwwroot\content\gallery\2023\" />
   </ItemGroup>
 
 </Project>
