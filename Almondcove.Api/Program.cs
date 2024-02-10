@@ -98,7 +98,6 @@ if (app.Environment.IsProduction())
 {
     app.UseCors("ProductionPolicy");
 }
-
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseStaticFiles();

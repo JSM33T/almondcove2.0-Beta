@@ -9,6 +9,7 @@ using Almondcove.Api.Data;
 using Almondcove.Api.Entities.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
+using AutoMapper;
 
 namespace Almondcove.Api.Controllers
 {
@@ -19,17 +20,16 @@ namespace Almondcove.Api.Controllers
     {
         private readonly AlmondDbContext _context = context;
 
-
-
         /*=============================================
                             CRUD
         =============================================*/
-        // GET: api/Messages
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Message>>> GetMessage()
         {
             return await _context.Messages.ToListAsync();
-        }
+        } 
+        
 
         // GET: api/Messages/5
         [HttpGet("{id}")]
