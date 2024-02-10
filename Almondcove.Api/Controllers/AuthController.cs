@@ -31,9 +31,9 @@ namespace Almondcove.Api.Controllers
             var creadentials = new SigningCredentials(SecurityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
                {
-                    new Claim(ClaimTypes.NameIdentifier, "Jasmeet"),
+                    new Claim(ClaimTypes.NameIdentifier, "JSM33T"),
                     new Claim(ClaimTypes.GivenName, "Jasmeet"),
-                    new Claim(ClaimTypes.Role, "none"),
+                    new Claim(ClaimTypes.Role, "user"),
                 };
 
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Audience"],

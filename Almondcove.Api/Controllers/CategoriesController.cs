@@ -14,31 +14,14 @@ namespace Almondcove.Api.Controllers
         private readonly AlmondDbContext _context = context;
         private readonly IMemoryCache _cache = memoryCache;
 
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
-        //{
-
-        //    if (_cache.TryGetValue("Categories", out List<Category> cachedCategories))
-        //    {
-        //        return cachedCategories;
-        //    }
-
-        //    var categories = await _context.Categories.ToListAsync();
-
-        //    _cache.Set("Categories", categories, TimeSpan.FromHours(5));
-
-        //    return categories;
-        //}
-
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetCategories()
         {
-            //if (_cache.TryGetValue("Categories", out List<CategoryDTO> cachedCategories))
-            //{
-            //    return cachedCategories;
-            //}
+            if (_cache.TryGetValue("Categories", out List<CategoryDTO> cachedCategories))
+            {
+                return cachedCategories;
+            }
 
             var categories = await _context.Categories.ToListAsync();
             var categoryDtos = categories.Select(category => new CategoryDTO
@@ -46,10 +29,10 @@ namespace Almondcove.Api.Controllers
                 Name = category.Name,
                 Description = category.Description,
                 Slug = category.Slug,
-                Type = (CategoryType)category.Type
-        }).ToList();
+                Type = category.Type.ToString()
+            }).ToList();
 
-           // _cache.Set("Categories", categoryDtos, TimeSpan.FromHours(5));
+            _cache.Set("Categories", categoryDtos, TimeSpan.FromMinutes(5));
             return categoryDtos;
         }
 
@@ -65,15 +48,14 @@ namespace Almondcove.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostCategory(CategoryDTO categoryDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var category = new Category
             {
                 Name = categoryDto.Name,
                 Description = categoryDto.Description,
+                Slug = categoryDto.Slug,
+                Type = (CategoryType)Enum.Parse(typeof(CategoryType), categoryDto.Type)
             };
 
             _context.Categories.Add(category);

@@ -33,6 +33,13 @@ builder.Services.AddDbContext<AlmondDbContext>(options =>
 
 builder.Services.AddMemoryCache();
 
+//builder.Services.AddStackExchangeRedisCache(options =>
+//    {
+//        options.Configuration = builder.Configuration["Redis : Configuration"];
+//        options.InstanceName = builder.Configuration["Redis : InstanceName"];
+//    }
+//    );
+
 builder.Services.AddRateLimiter(o => o
     .AddFixedWindowLimiter(policyName: "fixed", options =>
     {
@@ -91,8 +98,6 @@ if (app.Environment.IsProduction())
 {
     app.UseCors("ProductionPolicy");
 }
-
-
 
 app.UseAuthentication();
 app.UseAuthorization();
